@@ -1,3 +1,5 @@
+import {IsNotEmpty } from 'class-validator';
+
 export enum TaskStatus {
     OPEN= 'OPEN',
     IN_PROGRESS= 'IN_PROGRESS',
@@ -5,9 +7,8 @@ export enum TaskStatus {
 }
 
 export interface Task {
- id: string;
- title: string;
- description: string;
- status: TaskStatus;
-
+id: string;
+title: string;
+description: string;
+status: TaskStatus;
 }

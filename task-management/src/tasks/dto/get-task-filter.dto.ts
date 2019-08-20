@@ -1,4 +1,4 @@
-import { TaskStatus } from '../task.model';
+import { TaskStatus } from '../task-status.enum';
 import { IsOptional, IsIn, IsNotEmpty } from 'class-validator';
 
 export class GetTaskFilterDto {
@@ -9,3 +9,5 @@ export class GetTaskFilterDto {
     @IsNotEmpty()
     search: string;
 }
+//entities: [__dirname + '/../**/*.entity.{js,ts}']
+//http://127.0.0.1:60319/browser/

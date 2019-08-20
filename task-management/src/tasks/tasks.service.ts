@@ -37,6 +37,9 @@ async updateTaskById(id: number, taskStatus: TaskStatus): Promise<Task> {
     await task.save();
     return task;
 }
+getTasks(filterDto: GetTaskFilterDto) {
+
+}
    /*  getAllTasks(): Task[] {
        return this.tasks;
    }

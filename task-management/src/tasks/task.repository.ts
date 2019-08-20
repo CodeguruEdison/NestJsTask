@@ -2,6 +2,7 @@ import { Repository, EntityRepository, DeleteResult } from 'typeorm';
 import { Task } from './task.entity';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { TaskStatus } from './task-status.enum';
+import { GetTaskFilterDto } from './dto/get-task-filter.dto';
 
 @EntityRepository(Task)
 export class TaskRepository extends Repository<Task> {
@@ -15,5 +16,12 @@ export class TaskRepository extends Repository<Task> {
         await task.save();
         return task;
     }
-    
+    async getTasks(filterDto: GetTaskFilterDto): Promise<Task[]> {
+        const {status, search} = filterDto;
+        const query = this.createQueryBuilder('task');
+        const tasks= await query.getMany();
+        return tasks;
+
+    }
+
 }

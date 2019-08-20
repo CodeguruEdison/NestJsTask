@@ -30,20 +30,14 @@ export class TasksController {
                    @Body('status', TaskStatusValidationPipe) status: TaskStatus ): Promise<Task> {
        return this.taskService.updateTaskById(id, status);
     }
-    /*@Get()
-    getTasks(@Query(ValidationPipe) filterDto: GetTaskFilterDto): Task[] {
+    @Get()
+    getTasks(@Query(ValidationPipe) filterDto: GetTaskFilterDto) {
        // console.log(filterDto);
-        if (Object.keys(filterDto).length) {
-            return this.taskService.getTasksWithFilters(filterDto);
-        }
-        return this.taskService.getAllTasks();
+       return this.taskService.getTasks(filterDto);
     }
     
-    @Get('/:id')
-    getTaskById(@Param('id')id: string): Task {
-        return this.taskService.getTaskById(id);
-    }
+  
     
    
-*/
+
 }

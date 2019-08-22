@@ -9,7 +9,7 @@ import { TaskStatus } from './task-status.enum';
 
 @Controller('tasks')
 export class TasksController {
-    constructor(private taskService: TasksService) {
+    constructor(private readonly taskService: TasksService) {
 
     }
     @Get('/:id')

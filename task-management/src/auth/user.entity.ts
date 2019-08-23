@@ -12,12 +12,8 @@ export class User extends BaseEntity {
   password: string;
   @Column()
   salt: string;
-  
+
   async validatePassword(password: string): Promise<boolean> {
-   return  bcrypt.compare(password, this.password).then(function(res) {
-        return true;
-    });
-    //const hash = await bcrypt.hash(password, this.salt);
-    //return hash === this.password;
+      return await bcrypt.compare(password, this.password);
   }
 }

@@ -9,7 +9,7 @@ export class UserRepository extends Repository<User> {
     async signUp(authCredentialDto: AuthCredentialsDto): Promise<void> {
         const {username, password} = authCredentialDto;
         const salt = await bcrypt.genSalt();
-        //console.log(salt);
+        // console.log(salt);
         const user = new User();
         user.username = username;
         user.salt = await bcrypt.genSalt();
@@ -26,13 +26,12 @@ export class UserRepository extends Repository<User> {
         }
 
     }
-    public async validateUserPassword(authCredentialDto: AuthCredentialsDto): Promise<string>{
+    public async validateUserPassword(authCredentialDto: AuthCredentialsDto): Promise<string> {
         const {username, password} = authCredentialDto;
-        const user = await this.findOne( {username});
-        if(user && await user.validatePassword(user.password)) {
+        const user = await this.findOne({username});
+        if (user && await user.validatePassword(password) ){
             return user.username;
-        }
-        else{
+        } else {
             return null;
         }
 

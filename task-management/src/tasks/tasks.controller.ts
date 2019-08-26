@@ -30,7 +30,8 @@ getTaskById(@Param('id', ParseIntPipe)id: number,
     @UsePipes(ValidationPipe)
 createTask( @Body() createTaskDto: CreateTaskDto,
             @GetUser()user: User ): Promise < Task > {
-        return this.taskService.createTask(createTaskDto, user);
+         this.logger.verbose(`User "${user.username}" creating a new task .Data : ${JSON.stringify(createTaskDto)}`)  ;
+         return this.taskService.createTask(createTaskDto, user);
     }
 @Delete('/:id')
 deleteByTaskId( @Param('id', ParseIntPipe) id: number,

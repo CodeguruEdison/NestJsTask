@@ -5,11 +5,11 @@ import { TaskStatus } from './task-status.enum';
 import { GetTaskFilterDto } from './dto/get-task-filter.dto';
 import { QueryExpressionMap } from 'typeorm/query-builder/QueryExpressionMap';
 import { User } from '../auth/user.entity';
-
+import { Logger, InternalServerErrorException } from '@nestjs/common';
 
 @EntityRepository(Task)
 export class TaskRepository extends Repository<Task> {
-
+  private logger = new Logger('Task Repostiry');
     async createTask(createTaskDto: CreateTaskDto,
                      user: User): Promise<Task> {
         const {title, description } = createTaskDto;
@@ -18,9 +18,14 @@ export class TaskRepository extends Repository<Task> {
         task.description = description;
         task.status = TaskStatus.OPEN;
         task.user = user;
-        await task.save();
+        try {
+            await task.save();
+        } catch (error) {
+            this.logger.error(`failed to create for user "${user.username}"`, error.stack);
+            throw new InternalServerErrorException();
+        }
         delete task.user;
-        
+
         return task;
     }
     async getTasks(filterDto: GetTaskFilterDto, user: User): Promise<Task[]> {
@@ -33,10 +38,13 @@ export class TaskRepository extends Repository<Task> {
         if (search) {
            query.andWhere('(LOWER(task.status)  LIKE :search  OR LOWER(task.description) LIKE :search)', {search: `%${search.toLowerCase()}%`});
          }
-         
-        const tasks = await query.getMany();
-
-        return tasks;
+        try {
+            const tasks = await query.getMany();
+            return tasks;
+         } catch (error) {
+             this.logger.error(`failed to get for user "${user.username}"`, error.stack);
+             throw new InternalServerErrorException();
+         }
 
     }
 

@@ -9,6 +9,13 @@ import { Logger, InternalServerErrorException } from '@nestjs/common';
 
 @EntityRepository(Task)
 export class TaskRepository extends Repository<Task> {
+    /**
+     *
+     */
+    constructor() {
+        super();
+        
+    }
   private logger = new Logger('Task Repostiry');
     async createTask(createTaskDto: CreateTaskDto,
                      user: User): Promise<Task> {
